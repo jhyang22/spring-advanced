@@ -38,15 +38,22 @@ class ManagerServiceTest {
     @InjectMocks
     private ManagerService managerService;
 
+    /**
+     * 레벨 3-2 테스트 코드 연습 - 2 - 1번 케이스
+     */
     @Test
-    public void manager_목록_조회_시_Todo가_없다면_NPE_에러를_던진다() {
-        // given
+    public void manager_목록_조회_시_Todo가_없다면_InvalidRequestException_에러를_던진다() {
+        // given - 준비
+        // todoId로 1을 주고
+        // willReturn : todoRepository.findById(todId))가 호출되면 Optional.empty()를 반환해줘! 라는 의미
         long todoId = 1L;
         given(todoRepository.findById(todoId)).willReturn(Optional.empty());
 
-        // when & then
+        // when & then - 실행 & 결과
+        // assertThrows : managerService.getManagers(todoId)가 InvalidRequestException을 발생시킬 것이라고 예상하는 것
+        // assertEquals는 예외 메시지까지 검증하는 것
         InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> managerService.getManagers(todoId));
-        assertEquals("Manager not found", exception.getMessage());
+        assertEquals("Todo not found", exception.getMessage());
     }
 
     @Test
