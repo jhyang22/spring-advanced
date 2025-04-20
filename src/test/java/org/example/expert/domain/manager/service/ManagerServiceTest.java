@@ -64,6 +64,7 @@ class ManagerServiceTest {
         long managerUserId = 2L;
 
         Todo todo = new Todo();
+        // private으로 되어있어 값을 못넣지만 ReflectionTestUtils.setField를 사용하여 강제로 값을 넣는 것!
         ReflectionTestUtils.setField(todo, "user", null);
 
         ManagerSaveRequest managerSaveRequest = new ManagerSaveRequest(managerUserId);
