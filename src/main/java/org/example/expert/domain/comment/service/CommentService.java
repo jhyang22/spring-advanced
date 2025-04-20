@@ -39,10 +39,13 @@ public class CommentService {
 
         Comment savedComment = commentRepository.save(newComment);
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         return new CommentSaveResponse(
-                savedComment.getId(),
-                savedComment.getContents(),
-                new UserResponse(user.getId(), user.getEmail())
+                savedComment,
+                new UserResponse(user)
         );
     }
 
@@ -50,13 +53,16 @@ public class CommentService {
     public List<CommentResponse> getComments(long todoId) {
         List<Comment> commentList = commentRepository.findByTodoIdWithUser(todoId);
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         List<CommentResponse> dtoList = new ArrayList<>();
         for (Comment comment : commentList) {
             User user = comment.getUser();
             CommentResponse dto = new CommentResponse(
-                    comment.getId(),
-                    comment.getContents(),
-                    new UserResponse(user.getId(), user.getEmail())
+                    comment,
+                    new UserResponse(user)
             );
             dtoList.add(dto);
         }

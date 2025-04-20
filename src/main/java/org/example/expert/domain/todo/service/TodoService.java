@@ -39,12 +39,13 @@ public class TodoService {
         );
         Todo savedTodo = todoRepository.save(newTodo);
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         return new TodoSaveResponse(
-                savedTodo.getId(),
-                savedTodo.getTitle(),
-                savedTodo.getContents(),
-                weather,
-                new UserResponse(user.getId(), user.getEmail())
+                savedTodo,
+                new UserResponse(user)
         );
     }
 
@@ -53,14 +54,13 @@ public class TodoService {
 
         Page<Todo> todos = todoRepository.findAllByOrderByModifiedAtDesc(pageable);
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         return todos.map(todo -> new TodoResponse(
-                todo.getId(),
-                todo.getTitle(),
-                todo.getContents(),
-                todo.getWeather(),
-                new UserResponse(todo.getUser().getId(), todo.getUser().getEmail()),
-                todo.getCreatedAt(),
-                todo.getModifiedAt()
+                todo,
+                new UserResponse(todo.getUser())
         ));
     }
 
@@ -70,14 +70,13 @@ public class TodoService {
 
         User user = todo.getUser();
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         return new TodoResponse(
-                todo.getId(),
-                todo.getTitle(),
-                todo.getContents(),
-                todo.getWeather(),
-                new UserResponse(user.getId(), user.getEmail()),
-                todo.getCreatedAt(),
-                todo.getModifiedAt()
+                todo,
+                new UserResponse(user)
         );
     }
 }
