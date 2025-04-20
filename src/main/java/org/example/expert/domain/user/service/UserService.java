@@ -19,8 +19,12 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserResponse getUser(long userId) {
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         User user = userRepository.findById(userId).orElseThrow(() -> new InvalidRequestException("User not found"));
-        return new UserResponse(user.getId(), user.getEmail());
+        return new UserResponse(user);
     }
 
     @Transactional

@@ -53,9 +53,13 @@ public class ManagerService {
         Manager newManagerUser = new Manager(managerUser, todo);
         Manager savedManagerUser = managerRepository.save(newManagerUser);
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         return new ManagerSaveResponse(
                 savedManagerUser.getId(),
-                new UserResponse(managerUser.getId(), managerUser.getEmail())
+                new UserResponse(managerUser)
         );
     }
 
@@ -66,12 +70,16 @@ public class ManagerService {
 
         List<Manager> managerList = managerRepository.findByTodoIdWithUser(todo.getId());
 
+        /**
+         * 과제 도전 5
+         * 매개변수 간소화
+         */
         List<ManagerResponse> dtoList = new ArrayList<>();
         for (Manager manager : managerList) {
             User user = manager.getUser();
             dtoList.add(new ManagerResponse(
                     manager.getId(),
-                    new UserResponse(user.getId(), user.getEmail())
+                    new UserResponse(user)
             ));
         }
         return dtoList;
