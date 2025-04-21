@@ -15,14 +15,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 과제 도전 5
+ * @RequestMapping 사용하여 중복되는 URL을 묶었습니다
+ */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/todos")
 public class ManagerController {
 
     private final ManagerService managerService;
     private final JwtUtil jwtUtil;
 
-    @PostMapping("/todos/{todoId}/managers")
+    @PostMapping("/{todoId}/managers")
     public ResponseEntity<ManagerSaveResponse> saveManager(
             @Auth AuthUser authUser,
             @PathVariable long todoId,
@@ -31,12 +36,12 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.saveManager(authUser, todoId, managerSaveRequest));
     }
 
-    @GetMapping("/todos/{todoId}/managers")
+    @GetMapping("/{todoId}/managers")
     public ResponseEntity<List<ManagerResponse>> getMembers(@PathVariable long todoId) {
         return ResponseEntity.ok(managerService.getManagers(todoId));
     }
 
-    @DeleteMapping("/todos/{todoId}/managers/{managerId}")
+    @DeleteMapping("/{todoId}/managers/{managerId}")
     public void deleteManager(
             @RequestHeader("Authorization") String bearerToken,
             @PathVariable long todoId,
