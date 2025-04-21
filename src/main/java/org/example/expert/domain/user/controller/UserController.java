@@ -10,13 +10,18 @@ import org.example.expert.domain.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 과제 도전 5
+ * @RequestMapping 사용하여 중복되는 URL을 묶었습니다
+ */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUser(@PathVariable long userId) {
         return ResponseEntity.ok(userService.getUser(userId));
     }
@@ -29,7 +34,7 @@ public class UserController {
      */
     // auth는 임의로 만든 어노테이션
     // 권한 확인용?
-    @PutMapping("/users")
+    @PutMapping
     public void changePassword(@Auth AuthUser authUser, @Valid @RequestBody UserChangePasswordRequest userChangePasswordRequest) {
         userService.changePassword(authUser.getId(), userChangePasswordRequest);
     }

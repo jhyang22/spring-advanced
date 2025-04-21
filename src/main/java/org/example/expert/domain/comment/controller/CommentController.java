@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 과제 도전 5
+ * @RequestMapping 사용하여 중복되는 URL을 묶었습니다
+ */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/todos")
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/todos/{todoId}/comments")
+    @PostMapping("/{todoId}/comments")
     public ResponseEntity<CommentSaveResponse> saveComment(
             @Auth AuthUser authUser,
             @PathVariable long todoId,
@@ -28,7 +33,7 @@ public class CommentController {
         return ResponseEntity.ok(commentService.saveComment(authUser, todoId, commentSaveRequest));
     }
 
-    @GetMapping("/todos/{todoId}/comments")
+    @GetMapping("/{todoId}/comments")
     public ResponseEntity<List<CommentResponse>> getComments(@PathVariable long todoId) {
         return ResponseEntity.ok(commentService.getComments(todoId));
     }

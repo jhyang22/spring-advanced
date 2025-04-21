@@ -12,13 +12,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 과제 도전 5
+ * @RequestMapping 사용하여 중복되는 URL을 묶었습니다
+ */
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/todos")
 public class TodoController {
 
     private final TodoService todoService;
 
-    @PostMapping("/todos")
+    @PostMapping
     public ResponseEntity<TodoSaveResponse> saveTodo(
             @Auth AuthUser authUser,
             @Valid @RequestBody TodoSaveRequest todoSaveRequest
@@ -26,7 +31,7 @@ public class TodoController {
         return ResponseEntity.ok(todoService.saveTodo(authUser, todoSaveRequest));
     }
 
-    @GetMapping("/todos")
+    @GetMapping
     public ResponseEntity<Page<TodoResponse>> getTodos(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
@@ -34,7 +39,7 @@ public class TodoController {
         return ResponseEntity.ok(todoService.getTodos(page, size));
     }
 
-    @GetMapping("/todos/{todoId}")
+    @GetMapping("/{todoId}")
     public ResponseEntity<TodoResponse> getTodo(@PathVariable long todoId) {
         return ResponseEntity.ok(todoService.getTodo(todoId));
     }
